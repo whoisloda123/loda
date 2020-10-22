@@ -1,0 +1,6 @@
+#Application initializer
+org.springframework.context.ApplicationContextInitializer=com.liucan.loda.annotation.LodaApplicationContextInitializer
+#Application listener
+org.springframework.context.ApplicationListener=\
+  com.liucan.loda.annotation.LodaApplicationStartedListener,\
+  com.liucan.loda.annotation.LodaApplicationStartingListener
