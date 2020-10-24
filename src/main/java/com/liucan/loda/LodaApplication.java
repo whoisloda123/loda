@@ -8,8 +8,8 @@ import com.liucan.loda.mode.Town;
 import com.liucan.loda.mode.World;
 import com.liucan.loda.universe.EnableUniverse;
 import com.liucan.loda.universe.IHello;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
@@ -24,26 +24,8 @@ import java.util.List;
 public class LodaApplication {
 
     public static void main(String[] args) {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Hell application has been shut down!");
-        }));
-
-        ConfigurableApplicationContext context = SpringApplication.run(LodaApplication.class, args);
-        System.out.println(context.getBean(World.class).toString());
-        int beanDefinitionCount = context.getBeanFactory().getBeanDefinitionCount();
-        Country bean1 = context.getBean(Country.class);
-        context.getBean(Country.class).test();
-
-        //Object bean3 = context.getBean("townFactoryBean");
-        Town bean2 = context.getBean(Town.class);
-
-        IHello bean = context.getBean(IHello.class);
-        if (bean != null) {
-            List<String> userNames = bean.getUserNames();
-            System.out.println(userNames);
-        }
-
-        LodaEventPublisher lodaEventPublisher = context.getBean(LodaEventPublisher.class);
-        lodaEventPublisher.publishEvent(new LiucanLodaEvent(context, bean1));
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(LodaApplication.class)
+                .banner(new LodaApplicationBanner())
+                .run(args);
     }
 }
