@@ -4,4 +4,4 @@ org.springframework.context.ApplicationContextInitializer=\
 
 #Application listener
 org.springframework.context.ApplicationListener=\
-  com.liucan.loda.LodaApplicatonListener
+  com.liucan.loda.LodaApplicationListener

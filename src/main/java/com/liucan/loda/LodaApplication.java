@@ -1,18 +1,11 @@
 package com.liucan.loda;
 
 import com.liucan.loda.annotation.LodaScan;
-import com.liucan.loda.annotation.event.LiucanLodaEvent;
-import com.liucan.loda.annotation.event.LodaEventPublisher;
-import com.liucan.loda.mode.Country;
-import com.liucan.loda.mode.Town;
-import com.liucan.loda.mode.World;
 import com.liucan.loda.universe.EnableUniverse;
-import com.liucan.loda.universe.IHello;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import java.util.List;
+import org.springframework.util.StopWatch;
 
 /**
  * @author liucan
@@ -24,9 +17,13 @@ import java.util.List;
 public class LodaApplication {
 
     public static void main(String[] args) {
+        StopWatch stopWatch = new StopWatch("统计loda应用程序时间");
+        stopWatch.start("启动时间");
         ConfigurableApplicationContext context = new SpringApplicationBuilder(LodaApplication.class)
                 .banner(new LodaApplicationBanner())
                 .main(LodaApplication.class)
                 .run(args);
+        stopWatch.stop();
+        System.out.println(stopWatch.prettyPrint());
     }
 }
