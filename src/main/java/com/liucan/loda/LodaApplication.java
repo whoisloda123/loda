@@ -26,6 +26,7 @@ public class LodaApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplicationBuilder(LodaApplication.class)
                 .banner(new LodaApplicationBanner())
+                .main(LodaApplication.class)
                 .run(args);
     }
 }
