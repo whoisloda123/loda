@@ -1,4 +1,4 @@
 server:
   port: 8081
 loda:
-  eventName:loda name
+  eventName: lodaEvent

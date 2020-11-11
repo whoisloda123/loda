@@ -1,7 +1,8 @@
-package com.liucan.loda.annotation;
+package com.liucan.loda;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
@@ -13,9 +14,9 @@ import org.springframework.core.env.MutablePropertySources;
  * @author liucan
  * @date 10/20/20 10:15 PM
  */
-public class LodaApplicationContextInitializer implements ApplicationContextInitializer, Ordered {
+public class LodaApplicationContextInitializer implements ApplicationContextInitializer<AbstractApplicationContext>, Ordered {
     @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
+    public void initialize(AbstractApplicationContext applicationContext) {
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
         MutablePropertySources propertySources = environment.getPropertySources();
         String[] activeProfiles = environment.getActiveProfiles();
