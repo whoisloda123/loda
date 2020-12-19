@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class LodaBeanImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 
-    private BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
+    private final BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {

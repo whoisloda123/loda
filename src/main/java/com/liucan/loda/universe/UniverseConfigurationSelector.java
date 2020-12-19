@@ -24,8 +24,7 @@ public class UniverseConfigurationSelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         AnnotationAttributes annotationAttributes = AnnotationAttributes
                 .fromMap(importingClassMetadata.getAnnotationAttributes(EnableUniverse.class.getName()));
-        List<String> classNames = new ArrayList<>();
-        classNames.addAll(Arrays.asList(
+        List<String> classNames = new ArrayList<>(Arrays.asList(
                 CountryBeanPostProcessor.class.getName(),
                 HelloValueAnnotationBeanPostProcessor.class.getName(),
                 TownFactoryBean.class.getName()));

@@ -37,7 +37,7 @@ public class LodaAutowiredAnnotationBeanPostProcessor implements InstantiationAw
 
     private static final String requiredParameterName = "required";
 
-    private ConfigurableListableBeanFactory beanFactory;
+    private final ConfigurableListableBeanFactory beanFactory;
 
     public LodaAutowiredAnnotationBeanPostProcessor(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;

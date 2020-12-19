@@ -13,7 +13,7 @@ import org.springframework.beans.factory.support.*;
  */
 public class HelloBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
-    private BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
+    private final BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {

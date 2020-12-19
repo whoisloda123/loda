@@ -11,7 +11,7 @@ import com.liucan.loda.mode.Town;
  */
 public class CanliuLodaEvent extends LodaEvent {
 
-    private Town town;
+    private final Town town;
 
     public CanliuLodaEvent(Object source, Town town) {
         super(source);

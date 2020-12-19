@@ -11,7 +11,7 @@ import com.liucan.loda.mode.Country;
  */
 public class LiucanLodaEvent extends LodaEvent {
 
-    private Country country;
+    private final Country country;
 
     public LiucanLodaEvent(Object source, Country country) {
         super(source);
