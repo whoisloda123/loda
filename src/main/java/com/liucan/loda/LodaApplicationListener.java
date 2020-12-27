@@ -12,7 +12,7 @@ import org.springframework.core.ResolvableType;
  * @author liucan
  * @date 11/11/20 10:20 PM
  */
-public class LodaApplicatonListener implements GenericApplicationListener {
+public class LodaApplicationListener implements GenericApplicationListener {
     @Override
     public boolean supportsEventType(ResolvableType eventType) {
         return ResolvableType.forClass(ApplicationStartedEvent.class).isAssignableFrom(eventType) ||
