@@ -34,7 +34,7 @@ public class LodaEventSelector implements ImportSelector {
     }
 
     /**
-     * Loda bean definition registry {@link LodaEventListenerBeanPostProcessor} and {@link LodaEventPublisher}
+     * Loda bean definition registry {@link LodaEventListenerBeanPostProcessor} and {@link LodaEventMulticaster}
      *
      * @author liucan
      * @date 10/9/20 10:18 PM
@@ -44,7 +44,7 @@ public class LodaEventSelector implements ImportSelector {
         private final BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
         /**
-         * Register the {@link LodaEvent} of publisher that is {@link LodaEventPublisher}
+         * Register the {@link LodaEvent} of publisher that is {@link LodaEventMulticaster}
          * and {@link LodaEventListenerBeanPostProcessor}
          * @param importingClassMetadata metadata of {@link LodaScan}
          * @param registry bean definition registry
@@ -52,7 +52,7 @@ public class LodaEventSelector implements ImportSelector {
         @Override
         public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
             AbstractBeanDefinition publisherBeanDefinition = BeanDefinitionBuilder
-                    .rootBeanDefinition(LodaEventPublisher.class)
+                    .rootBeanDefinition(LodaEventMulticaster.class)
                     .setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE)
                     .getRawBeanDefinition();
             String publisherBeanName = this.beanNameGenerator.generateBeanName(publisherBeanDefinition, registry);

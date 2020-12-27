@@ -21,7 +21,7 @@ public class LodaBeanDefinitionRegistryPostProcessor implements BeanDefinitionRe
     /**
      * The packages to be scan
      */
-    private Set<String> packagesToScan;
+    private final Set<String> packagesToScan;
 
     private Environment environment;
 

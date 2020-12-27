@@ -12,10 +12,10 @@ import org.springframework.beans.factory.config.DestructionAwareBeanPostProcesso
  */
 public class LodaEventListenerBeanPostProcessor implements BeanPostProcessor, DestructionAwareBeanPostProcessor {
 
-    private final LodaEventPublisher lodaEventPublisher;
+    private final LodaEventMulticaster lodaEventMulticaster;
 
-    public LodaEventListenerBeanPostProcessor(LodaEventPublisher lodaEventPublisher) {
-        this.lodaEventPublisher = lodaEventPublisher;
+    public LodaEventListenerBeanPostProcessor(LodaEventMulticaster lodaEventMulticaster) {
+        this.lodaEventMulticaster = lodaEventMulticaster;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class LodaEventListenerBeanPostProcessor implements BeanPostProcessor, De
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof LodaEventListener) {
-            this.lodaEventPublisher.addEventListener((LodaEventListener) bean);
+            this.lodaEventMulticaster.addEventListener((LodaEventListener) bean);
         }
         return bean;
     }
@@ -34,7 +34,7 @@ public class LodaEventListenerBeanPostProcessor implements BeanPostProcessor, De
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
         if (bean instanceof LodaEventListener) {
-            this.lodaEventPublisher.removeListener((LodaEventListener) bean);
+            this.lodaEventMulticaster.removeListener((LodaEventListener) bean);
         }
     }
 
