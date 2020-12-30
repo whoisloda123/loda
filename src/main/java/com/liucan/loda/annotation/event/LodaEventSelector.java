@@ -6,12 +6,11 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.util.Assert;
 
 /**
- * Loda event selector
- *
+ * Loda event selector.
  * @author liucan
- * @date 10/8/20 2:22 PM
  * @see LodaScan
  */
 public class LodaEventSelector implements ImportSelector {
@@ -24,7 +23,7 @@ public class LodaEventSelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         AnnotationAttributes attributes = AnnotationAttributes
                 .fromMap(importingClassMetadata.getAnnotationAttributes(LodaScan.class.getName()));
-        assert attributes != null;
+        Assert.notNull(attributes, "Loda scan annotation metadata can not be null!");
         if (attributes.getBoolean(EVENT_DETERMINE_PARAMETER)) {
             return new String[]{LodaEventBeanDefinitionRegistrar.class.getName(),
                     CountLoda.class.getName(),
@@ -34,17 +33,15 @@ public class LodaEventSelector implements ImportSelector {
     }
 
     /**
-     * Loda bean definition registry {@link LodaEventListenerBeanPostProcessor} and {@link LodaEventMulticaster}
-     *
+     * Loda bean definition registry {@link LodaEventListenerBeanPostProcessor} and {@link DefaultLodaEventMulticaster}.
      * @author liucan
-     * @date 10/9/20 10:18 PM
      */
     public static class LodaEventBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 
         private final BeanNameGenerator beanNameGenerator = new DefaultBeanNameGenerator();
 
         /**
-         * Register the {@link LodaEvent} of publisher that is {@link LodaEventMulticaster}
+         * Register the {@link LodaEvent} of publisher that is {@link DefaultLodaEventMulticaster}
          * and {@link LodaEventListenerBeanPostProcessor}
          * @param importingClassMetadata metadata of {@link LodaScan}
          * @param registry bean definition registry
@@ -52,7 +49,7 @@ public class LodaEventSelector implements ImportSelector {
         @Override
         public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
             AbstractBeanDefinition publisherBeanDefinition = BeanDefinitionBuilder
-                    .rootBeanDefinition(LodaEventMulticaster.class)
+                    .rootBeanDefinition(DefaultLodaEventMulticaster.class)
                     .setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE)
                     .getRawBeanDefinition();
             String publisherBeanName = this.beanNameGenerator.generateBeanName(publisherBeanDefinition, registry);

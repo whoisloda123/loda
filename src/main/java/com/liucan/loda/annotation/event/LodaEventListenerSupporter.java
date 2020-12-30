@@ -1,46 +1,39 @@
 package com.liucan.loda.annotation.event;
 
-import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.Assert;
 
 /**
- * Supporter of {@link LodaEventListener} such as determines the listener support event
- *
+ * Supporter of {@link LodaEventListener} determines the listener support loda event.
  * @author liucan
- * @date 10/8/20 11:23 AM
  */
 public class LodaEventListenerSupporter {
-
-    private final LodaEventListener<LodaEvent> delegate;
 
     private final ResolvableType declaredEventType;
 
     public LodaEventListenerSupporter(LodaEventListener<?> delegate) {
         Assert.notNull(delegate, "Loda event listener not null!");
-        this.delegate = (LodaEventListener<LodaEvent>) delegate;
-        this.declaredEventType = resolveEventType(this.delegate);
+        this.declaredEventType = resolveEventType(delegate);
     }
 
     /**
      * Determine whether this listener actually supports the given event type.
-     *
      * @param type the event type(never {@code null})
      */
     public boolean supportsEventType(ResolvableType type) {
-        return this.declaredEventType != null && this.declaredEventType.isAssignableFrom(type);
+        return this.declaredEventType.isAssignableFrom(type);
     }
 
     /**
-     * resolve generic type form {@link LodaEventListener}
-     *
+     * Resolve generic type form {@link LodaEventListener}
      * @param lodaEventListener Loda event listener
      * @return generic type
      */
-    private ResolvableType resolveEventType(LodaEventListener lodaEventListener) {
+    private ResolvableType resolveEventType(LodaEventListener<?> lodaEventListener) {
         ResolvableType resolvableType = resolveEventType(lodaEventListener.getClass());
-        if (resolvableType == null || resolvableType.isAssignableFrom(LodaEvent.class)) {
-            Class<?> targetClass = AopProxyUtils.ultimateTargetClass(lodaEventListener);
+        if (resolvableType.isAssignableFrom(LodaEvent.class)) {
+            Class<?> targetClass = AopUtils.getTargetClass(lodaEventListener);
             if (targetClass != lodaEventListener.getClass()) {
                 resolvableType = resolveEventType(targetClass);
             }
@@ -49,13 +42,12 @@ public class LodaEventListenerSupporter {
     }
 
     /**
-     * resolve generic type form class which implements the {@link LodaEventListener}
-     *
+     * Resolve event type form class which implements the {@link LodaEventListener}
      * @param classType class implements the {@link LodaEventListener}
      * @return generic type
      */
     private ResolvableType resolveEventType(Class<?> classType) {
         ResolvableType resolvableType = ResolvableType.forClass(classType).as(LodaEventListener.class);
-        return resolvableType.hasGenerics() ? resolvableType.getGeneric() : null;
+        return resolvableType.hasGenerics() ? resolvableType.getGeneric() : ResolvableType.NONE;
     }
 }

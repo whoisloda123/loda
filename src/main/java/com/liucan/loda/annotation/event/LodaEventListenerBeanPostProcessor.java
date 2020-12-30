@@ -1,16 +1,13 @@
 package com.liucan.loda.annotation.event;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
 
 /**
  * {@link LodaEventListener} registry
- *
  * @author liucan
- * @date 10/7/20 10:20 PM
  */
-public class LodaEventListenerBeanPostProcessor implements BeanPostProcessor, DestructionAwareBeanPostProcessor {
+public class LodaEventListenerBeanPostProcessor implements DestructionAwareBeanPostProcessor {
 
     private final LodaEventMulticaster lodaEventMulticaster;
 
@@ -26,15 +23,17 @@ public class LodaEventListenerBeanPostProcessor implements BeanPostProcessor, De
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof LodaEventListener) {
-            this.lodaEventMulticaster.addEventListener((LodaEventListener) bean);
+            synchronized (this.lodaEventMulticaster) {
+                this.lodaEventMulticaster.addLodaEventListener((LodaEventListener<?>) bean);
+            }
         }
         return bean;
     }
 
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
-        if (bean instanceof LodaEventListener) {
-            this.lodaEventMulticaster.removeListener((LodaEventListener) bean);
+        synchronized (this.lodaEventMulticaster) {
+            this.lodaEventMulticaster.removeLodaEventListener((LodaEventListener<?>) bean);
         }
     }
 

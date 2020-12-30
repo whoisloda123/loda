@@ -1,100 +1,41 @@
 package com.liucan.loda.annotation.event;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.core.ResolvableType;
-import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.lang.Nullable;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 /**
- * {@link LodaEvent} multicaster
+ * Interface to be implemented by objects that can manage a number of
+ * {@link LodaEventListener} objects, and publish events to them.
  * @author liucan
- * @date 10/7/20 10:34 PM
  */
-@SuppressWarnings("rawtypes")
-public class LodaEventMulticaster {
-
-    protected final Log logger = LogFactory.getLog(getClass());
+public interface LodaEventMulticaster {
+    /**
+     * Multicast the given loda event to appropriate listeners.
+     * @param event the event to multicast
+     */
+    void multicastEvent(LodaEvent event);
 
     /**
-     * Loda event listener container
+     * Multicast the given loda event to appropriate listeners.
+     * @param event the event to multicast
+     * @param eventType the type of event (can be null)
      */
-    private Set<LodaEventListener> lodaEventListeners = new HashSet<>();
-
-    private ResolvableType resolveDefaultEventType(LodaEvent event) {
-        return ResolvableType.forInstance(event);
-    }
+    void multicastEvent(LodaEvent event, @Nullable ResolvableType eventType);
 
     /**
-     * Publish event
-     * @param event the com.liucan.loda.loda event never{@code null}
+     * Add a listener to be notified of all events.
+     * @param listener the listener to add
      */
-    public void publishEvent(LodaEvent event) {
-        publishEvent(event, null);
-    }
+    void addLodaEventListener(LodaEventListener<?> listener);
 
     /**
-     * Publish event
-     * @param event the {@link LodaEvent}
-     * @param eventType event type
+     * Remove a listener from notification list.
+     * @param listener the listener to remove
      */
-    public void publishEvent(LodaEvent event, @Nullable ResolvableType eventType) {
-        ResolvableType type = eventType != null ? eventType : resolveDefaultEventType(event);
-        retrieveEventListeners(type).forEach(lodaEventListener -> invokeListener(lodaEventListener, event));
-    }
-
-    @SuppressWarnings("unchecked")
-    private void invokeListener(LodaEventListener lodaEventListener, LodaEvent event) {
-        try {
-            lodaEventListener.onLodaEvent(event);
-        } catch (Exception e) {
-            logger.error("Handle Loda Event failed!" + e);
-        }
-    }
+    void removeLodaEventListener(LodaEventListener<?> listener);
 
     /**
-     * Determine whether this listener supports the given event type
-     * @param lodaEventListener com.liucan.loda.loda event listener
-     * @param eventType event type
-     * @return whether supports
+     * Remove all listeners registered with this multicaster.
      */
-    private boolean supportsType(LodaEventListener lodaEventListener, ResolvableType eventType) {
-        return new LodaEventListenerSupporter(lodaEventListener).supportsEventType(eventType);
-    }
-
-    /**
-     * retrieve all event listeners the given event type
-     * @param eventType the event type never {@code null}
-     * @return event listeners collections
-     */
-    private Collection<LodaEventListener> retrieveEventListeners(ResolvableType eventType) {
-        List<LodaEventListener> listeners = this.lodaEventListeners
-                .stream()
-                .filter(lodaEventListener -> supportsType(lodaEventListener, eventType))
-                .collect(Collectors.toList());
-        AnnotationAwareOrderComparator.sort(listeners);
-        return listeners;
-    }
-
-    public void addEventListener(LodaEventListener lodaEventListener) {
-        this.lodaEventListeners.add(lodaEventListener);
-    }
-
-    public Set<LodaEventListener> getLodaEventListeners() {
-        return this.lodaEventListeners;
-    }
-
-    public void setLodaEventListeners(Set<LodaEventListener> lodaEventListeners) {
-        this.lodaEventListeners = lodaEventListeners;
-    }
-
-    public void removeListener(LodaEventListener lodaEventListener) {
-        this.lodaEventListeners.remove(lodaEventListener);
-    }
+    void removeAllListeners();
 }

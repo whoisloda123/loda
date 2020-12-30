@@ -24,7 +24,8 @@ import java.util.Map;
  * @author liucan
  * @version 2020/8/30
  */
-public class World<T extends Serializable> implements EnvironmentAware, ApplicationContextAware, ResourceLoaderAware, BeanNameAware, InitializingBean, DisposableBean {
+public class World<T extends Serializable> implements EnvironmentAware,
+        ApplicationContextAware, ResourceLoaderAware, BeanNameAware, InitializingBean, DisposableBean {
 
     private ApplicationContext applicationContext;
 
