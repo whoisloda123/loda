@@ -41,6 +41,8 @@ public class World<T extends Serializable> implements EnvironmentAware,
      */
     private String userName;
 
+    private String userId;
+
     @LodaAutowired
     private Country country;
 
@@ -127,5 +129,13 @@ public class World<T extends Serializable> implements EnvironmentAware,
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

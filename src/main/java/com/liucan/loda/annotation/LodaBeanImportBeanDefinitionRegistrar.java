@@ -12,7 +12,6 @@ import java.util.Set;
 
 /**
  * Loda bean register as {@link LodaBeanDefinitionRegistryPostProcessor} and {@link LodaAutowiredAnnotationBeanPostProcessor}
- *
  * @author liucan
  */
 public class LodaBeanImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
@@ -50,16 +49,14 @@ public class LodaBeanImportBeanDefinitionRegistrar implements ImportBeanDefiniti
 
     /**
      * Get the packages from {@link LodaComponentScan}
-     *
      * @param metadata metadata
      * @return The packages to be scan
      */
     private Set<String> getPackagesToScan(AnnotationMetadata metadata) {
         AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(metadata.getAnnotationAttributes(LodaComponentScan.class.getName()));
-        Set<String> packagesToScan = new LinkedHashSet<>();
         Class<?>[] basePackageClasses = annotationAttributes.getClassArray("basePackageClasses");
-        packagesToScan.addAll(Arrays.asList(annotationAttributes.getStringArray("basePackages")));
-        for (Class basePackageClass : basePackageClasses) {
+        Set<String> packagesToScan = new LinkedHashSet<>(Arrays.asList(annotationAttributes.getStringArray("basePackages")));
+        for (Class<?> basePackageClass : basePackageClasses) {
             packagesToScan.add(ClassUtils.getPackageName(basePackageClass));
         }
         if (packagesToScan.isEmpty()) {

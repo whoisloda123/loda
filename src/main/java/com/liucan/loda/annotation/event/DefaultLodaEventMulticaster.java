@@ -19,7 +19,7 @@ public class DefaultLodaEventMulticaster implements LodaEventMulticaster {
     protected final Log logger = LogFactory.getLog(getClass());
 
     /**
-     * Loda event listener container
+     * Loda event listener container.
      */
     private final List<LodaEventListener<?>> lodaEventListeners = new ArrayList<>();
 
@@ -44,13 +44,12 @@ public class DefaultLodaEventMulticaster implements LodaEventMulticaster {
     }
 
     /**
-     * Determine whether this listener supports the given event type
-     * @param lodaEventListener com.liucan.loda.loda event listener
-     * @param eventType event type
-     * @return whether supports
+     * Determines whether listener is supported by the event type.
+     * @param listener the loda event listener
+     * @param eventType the event type
      */
-    private boolean supportsType(LodaEventListener<?> lodaEventListener, ResolvableType eventType) {
-        return new LodaEventListenerSupporter(lodaEventListener).supportsEventType(eventType);
+    private boolean supportsType(LodaEventListener<?> listener, ResolvableType eventType) {
+        return new LodaEventListenerSupporter(listener).supportsEventType(eventType);
     }
 
     /**
