@@ -1,11 +1,11 @@
 package com.liucan.loda;
 
 import com.liucan.loda.annotation.LodaScan;
+import com.liucan.loda.proxy.ProxyTest;
 import com.liucan.loda.universe.EnableUniverse;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-
 import org.springframework.util.StopWatch;
 
 /**
@@ -26,5 +26,6 @@ public class LodaApplication {
                 .run(args);
         stopWatch.stop();
         System.out.println(stopWatch.prettyPrint());
+        ProxyTest.test(context);
     }
 }
