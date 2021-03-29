@@ -5,8 +5,16 @@ import org.springframework.stereotype.Component;
 import java.lang.annotation.*;
 
 /**
- * The com.liucan.loda.loda component likes {@link Component}
- *
+ * The com.liucan.loda.loda component likes {@link Component},example:
+ * <pre>{@code
+ *      @Loda
+ *      public class Country {
+ *          public void test() {
+ *              System.out.println("Country::test");
+ *          }
+ *      }
+ * }</pre>
+ * fsf的
  * @author liucan
  * @see Component
  */

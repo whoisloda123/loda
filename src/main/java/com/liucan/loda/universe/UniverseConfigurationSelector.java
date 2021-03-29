@@ -10,14 +10,16 @@ import java.util.List;
 
 /**
  * Universe configuration import selector, whether import {@link HelloBeanDefinitionRegistryPostProcessor} or not
- * depend on {@link EnableUniverse#helloProxy()}
- *
+ * depends on {@link EnableUniverse#helloProxy()}
  * @author liucan
  * @see EnableUniverse
  * @see HelloBeanDefinitionRegistryPostProcessor
  */
 public class UniverseConfigurationSelector implements ImportSelector {
 
+    /**
+     * 注解 {@link EnableUniverse} 的属性: {@value}
+     */
     public static final String HELLO_PROXY_PARAMETER = "helloProxy";
 
     @Override
