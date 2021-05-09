@@ -1,6 +1,7 @@
 package com.liucan.loda.mode;
 
 import com.liucan.loda.annotation.LodaAutowired;
+import com.liucan.loda.config.House;
 import com.liucan.loda.universe.HelloValue;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
@@ -42,6 +43,8 @@ public class World<T extends Serializable> implements EnvironmentAware,
     private String userName;
 
     private String userId;
+
+    private House house;
 
     @LodaAutowired
     private Country country;
@@ -137,5 +140,13 @@ public class World<T extends Serializable> implements EnvironmentAware,
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public House getHouse() {
+        return house;
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 }
