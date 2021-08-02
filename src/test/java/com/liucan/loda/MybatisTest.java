@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author liucan
- * @date 2021/8/2
+ * @version 2021/8/2
  */
 public class MybatisTest {
 
@@ -26,20 +26,12 @@ public class MybatisTest {
     }
 
     @Test
-    public void testFindByUserName() {
-        SqlSession sqlSession = this.sqlSessionFactory.openSession();
-        User user = sqlSession.selectOne("test.findUserByUsername", "loda");
-        System.out.println(user);
-        sqlSession.close();
-    }
-
-    @Test
     public void testFindByUserId() throws Exception {
         SqlSession sqlSession = this.sqlSessionFactory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User userById = mapper.findUserById(1);
+        ActorMapper mapper = sqlSession.getMapper(ActorMapper.class);
+        Actor userById = mapper.findUserById(1);
         System.out.println(userById);
-        List<User> users = mapper.selectList();
+        List<Actor> users = mapper.selectList();
         System.out.println(users);
         sqlSession.close();
     }

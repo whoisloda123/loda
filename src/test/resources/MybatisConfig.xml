@@ -17,10 +17,10 @@
     </environments>
     <!--    &lt;!&ndash; 简化映射文件中parameterType和ResultType中的POJO类型名称编写&ndash;&gt;-->
     <!--    <typeAliases>-->
-    <!--        <typeAlias type="com.liucan.loda.User" alias="user"/>-->
+    <!--        <typeAlias type="com.liucan.loda.Actor" alias="user"/>-->
     <!--        <package name="com.liucan.loda"/>-->
     <!--    </typeAliases>-->
     <mappers>
-        <mapper resource="UserMapper.xml"/>
+        <mapper resource="ActorMapper.xml"/>
     </mappers>
 </configuration>
