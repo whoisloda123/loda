@@ -31,8 +31,25 @@ public class MybatisTest {
         ActorMapper mapper = sqlSession.getMapper(ActorMapper.class);
         Actor userById = mapper.findUserById(1);
         System.out.println(userById);
+        userById = mapper.findUserById(1);
         List<Actor> users = mapper.selectList();
         System.out.println(users);
         sqlSession.close();
+    }
+
+    @Test
+    public void testTwoLevelCache() throws Exception {
+        SqlSession sqlSession1 = this.sqlSessionFactory.openSession();
+        SqlSession sqlSession2 = this.sqlSessionFactory.openSession();
+        ActorMapper mapper1 = sqlSession1.getMapper(ActorMapper.class);
+        ActorMapper mapper2 = sqlSession2.getMapper(ActorMapper.class);
+
+        Actor userById = mapper1.findUserById(1);
+        System.out.println(userById);
+        sqlSession1.close();
+
+        userById = mapper2.findUserById(1);
+        System.out.println(userById);
+        sqlSession2.close();
     }
 }
