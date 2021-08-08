@@ -13,6 +13,22 @@
         <result column="last_update" property="lastUpdate" javaType="java.time.LocalDateTime"/>
     </resultMap>
 
+    <resultMap id="filmResultMap" type="Film">
+        <id column="film_id" property="filmId"/>
+        <result column="title" property="title"/>
+    </resultMap>
+
+    <resultMap id="filmActorResultMap" type="FilmActor">
+        <association property="actor" resultMap="actorResultMap"/>
+        <association property="film" resultMap="filmResultMap"/>
+    </resultMap>
+
+    <!--1对多，collection集合映射-->
+    <resultMap id="film1ResultMap" type="FilmActor1">
+        <result column="actor_id" property="actorId"/>
+        <collection property="films" resultMap="filmResultMap"/>
+    </resultMap>
+
     <sql id="whereSql">
         first_name
         like '%${value}%'
@@ -30,6 +46,27 @@
         select * from actor
         <where>
             <include refid="whereSql"/>
+        </where>
+    </select>
+
+    <select id="findFilmActorByActorId" resultMap="filmActorResultMap" parameterType="int">
+        SELECT * FROM film_actor fa
+        inner join actor a on fa.actor_id = a.actor_id
+        inner join film f on fa.film_id = f.film_id
+        <where>
+            <if test="actor_id != null">
+                fa.actor_id = #{actor_id}
+            </if>
+        </where>
+    </select>
+    <select id="findFilms" resultMap="film1ResultMap">
+        SELECT a.actor_id , f.* FROM film_actor fa
+        inner join actor a on fa.actor_id = a.actor_id
+        inner join film f on fa.film_id = f.film_id
+        <where>
+            <if test="actor_id != null">
+                fa.actor_id = #{actor_id}
+            </if>
         </where>
     </select>
 </mapper>

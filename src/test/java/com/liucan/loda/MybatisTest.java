@@ -52,4 +52,14 @@ public class MybatisTest {
         System.out.println(userById);
         sqlSession2.close();
     }
+
+    @Test
+    public void testFindByActorId() {
+        SqlSession sqlSession = this.sqlSessionFactory.openSession();
+        ActorMapper mapper = sqlSession.getMapper(ActorMapper.class);
+        List<FilmActor> filmByActorId = mapper.findFilmActorByActorId(1);
+        System.out.println(filmByActorId);
+        List<FilmActor1> films = mapper.findFilms(1);
+        sqlSession.close();
+    }
 }
