@@ -50,7 +50,6 @@ public class LodaEventSelector implements ImportSelector {
         public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
             AbstractBeanDefinition publisherBeanDefinition = BeanDefinitionBuilder
                     .rootBeanDefinition(DefaultLodaEventMulticaster.class)
-                    .setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE)
                     .getRawBeanDefinition();
             String publisherBeanName = this.beanNameGenerator.generateBeanName(publisherBeanDefinition, registry);
             registry.registerBeanDefinition(publisherBeanName, publisherBeanDefinition);
@@ -58,7 +57,6 @@ public class LodaEventSelector implements ImportSelector {
             AbstractBeanDefinition listenerBeanPostProcessorBeanDefinition = BeanDefinitionBuilder
                     .rootBeanDefinition(LodaEventListenerBeanPostProcessor.class)
                     .setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE)
-                    .addConstructorArgReference(publisherBeanName)
                     .getRawBeanDefinition();
             String listenerBeanPostProcessorBeanName = this.beanNameGenerator.generateBeanName(listenerBeanPostProcessorBeanDefinition, registry);
             registry.registerBeanDefinition(listenerBeanPostProcessorBeanName, listenerBeanPostProcessorBeanDefinition);
